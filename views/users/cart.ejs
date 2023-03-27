@@ -1,0 +1,275 @@
+<%- include('../layouts/head.ejs')%>
+<style>
+
+.main{
+    max-width: 100%;
+    padding: 20px;
+    background-color: #e7862b;
+  box-shadow: 0 0 10px rgba(19, 17, 17, 0.377);
+}
+
+
+.profile {
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.profile img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.profile h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.profile p {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.profile ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.profile li {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.profile li strong {
+  display: inline-block;
+  width: 100px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+</style>
+<body>
+    <% if(typeof userData !== "undefined"){ %>
+		<%-include('userloged') %>
+	<%}else{%>
+		<%- include('noUser') %>
+	<%}%>
+    <section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>YOUR CART</h1>
+					<nav class="d-flex align-items-center">
+						<a href="#">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="#">Welcome to Shoemart</a>
+					</nav>
+				</div>
+			</div>
+			
+		</div>
+	</section>
+
+    <div class="container main">
+
+
+        <div class="profile">
+            <div class="container">
+
+                <section class="h-100 h-custom" style="background-color: #ffffff;">
+                    <div class="container py-5 h-100">
+                      <div class="row d-flex justify-content-center align-items-center h-100">
+                        <div class="col-12">
+                          <br><br><br>
+                          <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+                            <div class="card-body p-0">
+                              <div class="row g-0">
+                                <div class="col-lg-8">
+                                  <div class="p-5">
+                  
+                                    <div class="d-flex justify-content-between align-items-center mb-5">
+                                      <h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
+                                      <h6 class="mb-0 text-muted"><%= length %> items</h6>
+                                    </div>
+                                    <hr class="my-4">
+                                    <% if (length) { %>
+                                    <% cartProducts.forEach(function(product) { %>
+                                    <form action="/checkout" method="post">
+                                      <div class="row mb-4 d-flex justify-content-between align-items-center ">
+                                        <div class="col-md-2 col-lg-2 col-xl-2">
+                                          <img src="/images/<%= product.images[0] %>" class="img-fluid rounded-3" style="width: auto;height: auto;" >
+                                        </div>
+                                        <div class="col-md-3 col-lg-3 col-xl-3">
+                                          <!-- <h6 class="text-muted"><%= product.category %> </h6>  -->
+                                          <h6 class="text-black mb-0"><%= product.productName %> </h6>
+                                          <br>
+                                          <%if(product.stock === 0 ){%>
+                                            <h6 class="mb-0" style="color:red">out of stock</h6>
+                                          <%}%>
+                                        </div>
+                  
+                                        <div class="col-md-3 col-lg-3 col-xl-2 d-flex"> 
+                                          <!-- Minus button  -->
+                                          <a class="btn btn-primary text-white"
+                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown();validateData('<%= product._id %>')">
+                                            &nbsp;-&nbsp;</a>&nbsp;&nbsp;
+                  
+                                          <div class="form-outline">
+                                            <input style="width: 5rem;" class="form-control" type="number" id="<%= product._id %>" min="1"
+                                              name="quantity" pattern="<%= product._id %>" max="<%= product.stock %>" value="1"
+                                              onchange="validateData('<%=product._id %>')"  readonly />
+                                            <span id="price_text_<%= product._id %>" hidden=""><%= product.price %> </span>
+                                          </div>
+                                          &nbsp;&nbsp;
+                                           <!-- plus button  -->
+                                          <a class="btn btn-primary text-white"
+                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp();validateData('<%= product._id %>')">
+                                            &nbsp;+&nbsp; </a>
+                                          <div class="form-outline">
+                                            <div class="fs-lg text-accent pt-2 price">
+                                              <div id="get">
+                                                <p id="actual_price_<%= product._id %>" hidden=""><%= product.price %></p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                  
+                                          <h6 class="mb-0">&nbsp;&nbsp;<%= product.price %></h6>
+                                        </div>
+                                        <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                          <button  style="border:none;background-color:white;" onclick="removeCartProduct('<%= product._id %>')"> <a href="" class="text-muted">
+                                            <i class="fa fa-trash-o" style="font-size:36px;color:rgb(190, 0, 0)"></i></a></button>
+
+                                        </div>
+                                    </div>
+                                    <%})%>
+                                    <%}else{%>
+    
+                              <img src="/img/cart.webp" alt="" style="width: 10vw; height: 10vh;"> <span>Missing Cart items?</span>
+                              <%}%>
+                              <hr class="my-4">
+
+
+
+
+
+                              <div class="pt-5">
+                                <h6 class="mb-0"><a href="/user" class="text-body"><i
+                                      class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a></h6>
+                              </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 bg-grey">
+                          <div class="p-5">
+                            <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
+                            <hr class="my-4">
+          
+                            <div class="d-flex justify-content-between mb-4">
+                                <h5 class="text-uppercase">items <%= length %></h5>
+                    <h3 id="subtotal" class="fw-normal"><%= subtotal %></h3>
+                    <h5></h5>
+                  </div>
+
+                  <h5 class="text-uppercase mb-3">Shipping</h5>
+
+
+
+              <hr class="my-4">
+
+                                <div class="d-flex justify-content-between mb-5">
+                                <h5 class="text-uppercase">Total price</h5>
+                                <h2 id="sub" class="fw-normal"><%= subtotal %></h2>
+                            </div>
+                            <% if (!subtotal) { %>
+                            <button type="button" class="btn btn-primary btn-lg btn-block disabled ">
+                              Checkout
+                            </button>
+                            <% } else { %>
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">
+                              Checkout
+                            </button>
+                            </form>
+                            <% } %>          
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+                  
+            </div>
+        </div>
+        </div>
+      
+      
+        <%- include('../layouts/footer.ejs')%>
+
+        <script>
+          async function removeCartProduct(cartProductId) {
+  try {
+    const response = await fetch('/removeproduct/' + cartProductId, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const data = await response.json();
+    if (data === 'success') {
+      window.location.reload();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+
+
+
+        
+        
+        
+          function validateData(id, index) {
+            const element = document.getElementById(id)
+            const priceText = document.getElementById('price_text_' + id)
+            const price = document.getElementById('actual_price_' + id)
+            const subtotal = document.getElementById('subtotal')
+            const sub = document.getElementById('sub')
+            if (Number(element.value) > Number(element.max))
+              element.value = element.max
+            const rate = priceText.innerHTML
+            priceText.innerHTML = Number(price.innerHTML) * Number(element.value)
+            const diff = Number(priceText.innerHTML) - Number(rate)
+            subtotal.innerHTML = Number(diff) + Number(subtotal.innerHTML),
+              sub.innerHTML = Number(diff) + Number(sub.innerHTML)
+        
+        
+        
+          }
+          async function proceedTocheckout() {
+            const quantity = Object.values(document.getElementsByName('quantity')).map((cartProduct) => (
+              {
+                cartProductid: cartProduct.id,
+                quantity: cartProduct.value
+              }
+            ))
+        
+            let response = await fetch('/checkout', {
+              method: 'post',
+              headers: { 'Content-Type': 'application/json', },
+              body: JSON.stringify(quantity)
+            });
+        
+          }
+        
+        
+        </script>

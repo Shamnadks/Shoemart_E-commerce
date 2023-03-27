@@ -1,0 +1,95 @@
+<%- include('../layouts/head.ejs')%>
+
+<body>
+
+	<!-- Start Header Area -->
+	<% if(typeof userData !== "undefined"){ %>
+		<%-include('userloged') %>
+	<%}else{%>
+		<%- include('noUser') %>
+	<%}%>
+	<!-- End Header Area -->
+
+	<!-- Start Banner Area -->
+	<section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>Register Your Account</h1>
+					<nav class="d-flex align-items-center">
+						<a href="#">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="#">Welcome to Shoemart</a>
+					</nav>
+				</div>
+			</div>
+			
+		</div>
+	</section>
+	<!-- End Banner Area -->
+	
+
+	<!--================Login Box Area =================-->
+	<section class="login_box_area section_gap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="login_box_img">
+						<img class="img-fluid" src="img/login1.jpg" alt="">
+						<div class="hover">
+							<h4>New to shoemart?</h4>
+							<p>There are advances being made in shoes and boots everyday, and a good example of this is the</p>
+							<a class="primary-btn" href="/login">Login</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="login_form_inner">
+						<h3>Register New Account</h3>
+						<% 
+				if(typeof message !=='undefined'){
+					%>
+						<p style="color:green;"><%= message %></p>
+				
+					<%
+				
+				}
+				
+				%>
+						<form class="row login_form" action="" method="post" id="contactForm" novalidate="novalidate">
+							<div class="col-md-12 form-group">
+								<input type="text" class="form-control" id="name" name="name" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Username'">	
+							</div>
+							<span id="name-error" style="color:red"></span>
+							<div class="col-md-12 form-group">
+								<input type="text" class="form-control" id="email" name="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email'">
+							</div>
+							<span id="email-error" style="color:red"></span>
+							<div class="col-md-12 form-group">
+								<input type="text" class="form-control" id="phone" name="mno" placeholder="Phone Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Phone Number'">
+							</div>
+							<span id="phoneNumber-error" style="color:red"></span>
+							<div class="col-md-12 form-group">
+								<input type="text" class="form-control" id="password" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'enter password'">
+							</div>
+							<span id="password-error" style="color:red"></span>
+							<div class="col-md-12 form-group">
+								<input type="text" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Conform Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Conform Password'">
+							</div>
+							<span id="confirm-password-error" style="color:red"></span>
+							
+							<div class="col-md-12 form-group">
+								<button  id="registerButton"type="submit" value="submit" class="primary-btn">REGISTER ACCOUNT</button>
+								<a href="#"></a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+
+
+	
+	<script src="js/registrationvalidation.js"></script>
+	<%- include('../layouts/footer') %>

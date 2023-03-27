@@ -1,0 +1,157 @@
+
+<%- include('../layouts/head.ejs')%>
+<style>
+
+.main{
+    max-width: 100%;
+    padding: 20px;
+    background-color: #e7862b;
+  box-shadow: 0 0 10px rgba(19, 17, 17, 0.377);
+}
+
+
+.profile {
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.profile img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.profile h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.profile p {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.profile ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.profile li {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.profile li strong {
+  display: inline-block;
+  width: 100px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+</style>
+<body>
+    <% if(typeof userData !== "undefined"){ %>
+		<%-include('userloged') %>
+	<%}else{%>
+		<%- include('noUser') %>
+	<%}%>
+    <section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>Your Orders</h1>
+					<nav class="d-flex align-items-center">
+						<a href="#">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="#">Welcome to Shoemart</a>
+					</nav>
+				</div>
+			</div>
+			
+		</div>
+	</section>
+
+    <div class="container main">
+
+
+        <div class="profile">
+            <div class="container">
+
+
+
+
+
+
+                <div class="container-xl px-4 mt-4">
+                    <div class="row">
+
+
+                        <div class="col-md-12">
+                            <h4>Order details</h4>
+                            <div class="table-responsive">
+
+
+                              <table id="mytable" class="table table-bordred table-striped">
+                                <thead>
+                                  <th><input type="checkbox" id="checkall" /></th>
+                                  <th>OrderId</th>
+                                  <th>Name</th>
+                                  <th>Price</th>
+                                  <th>Quantity</th>
+                                  <th>Status</th>
+                                  <th>Action</th>
+                                </thead>
+                                <tbody>
+                                  <% order.forEach(function(orderItem) { %>
+                                  <tr>
+                                    <td><input type="checkbox" class="checkthis" /></td>
+                                    <td><a href="/single-order?id=<%= orderItem.orderId %>"><%= orderItem.orderId %></a></td>
+                                    <% var productNames = []; var productPrices = []; var productQuantities = []; var totalPrice = 0; var totalQuantity = 0; %>
+                                    <% orderItem.product.forEach(function(productItem) { %>
+                                      <% productNames.push(productItem.name); %>
+                                      <% productPrices.push(productItem.price); %>
+                                      <% productQuantities.push(productItem.quantity); %>
+                                      <% totalPrice += productItem.price * productItem.quantity; %>
+                                      <% totalQuantity += productItem.quantity; %>
+                                    <% }); %>
+                                    <td><%= productNames.join(', ') %></td>
+                                    <td><%= orderItem.total ? orderItem.total : orderItem.subtotal %></td>
+                                    <td><%= totalQuantity %></td>
+                                    <td><%= orderItem.status %></td>
+                                    <td><a href="/single-order?id=<%= orderItem.orderId %>" class="">View</a></td>
+                                  </tr>
+                                  <% }); %>
+                                </tbody>
+                              </table>
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+</div>
+</div>
+</div>
+</section>
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+</div>
+
+
+<%- include('../layouts/footer.ejs')%>

@@ -1,0 +1,159 @@
+<%- include('../layouts/head.ejs')%>
+<body id="category">
+
+	<!-- Start Header Area -->
+	<% if(typeof userData !== "undefined"){ %>
+		<%-include('userloged') %>
+	<%}else{%>
+		<%- include('noUser') %>
+	<%}%>
+	<!-- End Header Area -->
+
+	<!-- Start Banner Area -->
+	<section class="banner-area organic-breadcrumb" style="margin-bottom: 0px;">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>CHOOSE YOURS..👞👟🥾</h1>
+					<nav class="d-flex align-items-center">
+						<a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="#">Category<span class="lnr lnr-arrow-right"></span></a>
+						<a href="category.html"> products</a>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</section>
+
+<section class="rounded-3" style="background-color: #ffffff ;">
+    <div class="text-center container py-5">
+
+        <h1 class=" text-uppercase">
+            <strong>
+                <%= category.category %>
+            </strong>
+        </h1>
+        <%if(products.length>0)  {%>
+
+        <div class="row">
+            <%for(let i=0;i <products.length; i++){%>
+            <div class=" col-lg-4 col-md-12 mb-12">
+                <div style="border-radius: 1em; margin:15px; background-color: #f5f0e2 ; " class="card ">
+                    <div class="mask">
+                        <div class="d-flex justify-content-start align-items-end h-100" style="margin: 0px;">
+                            <h5><span class="text-danger"></span></h5>
+                        
+                    <div class="bg-image  hover-zoom ripple ripple-surface w-100 ripple-surface-light" 
+                        data-mdb-ripple-color="light">
+
+                        <a href="/product?id=<%=products[i]._id%>"> <img  style="border-radius: 1em;"
+                             src="/images/<%=products[i].images[0]%>"
+                                class="w-100" alt="" width="200px" height="210px">
+                        <div class="hover-overlay" >
+                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);">
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+                </div>
+                    </div>
+                    <div class="card-body">
+                        <a href="" class="text-reset text-decoration-none ">
+                            <h5 class="card-title mb-3 "><%= products[i].productName%></h5>
+                        </a>
+                        <a href="" class="text-reset text-decoration-none ">
+                             <!-- <p>{{this.category}}</p> -->
+                        </a>
+                        <h6 class="mb-3">₹<%=products[i].price%></h6>
+                        <li class="list-group">Free delivery</li>
+                    </div>
+                    <div class="card-body">
+                        <%if(products[i].stock > 0)  {%>
+                        <a class="btn the-userbutton" href="/addtocart?id=<%=products[i]._id%>">Add to Cart</a>
+                       <%}else{%>
+                        <a class="text-decoration-none text-danger " href=""><strong>Out of stock</strong></a>
+                        <%}%>
+                         <!-- <a href="/addtowishlist?id={{this._id}}" class="btn the-userbutton">Add to Wishlist</a> -->
+                    </div>
+                </div>
+            </div>
+            <%}%>
+          
+        </div>
+          <%}else{%>
+          <img src="/image/123456.webp" alt="">
+          <%}%>
+        <div class="pt-5">
+            <a href="category" class="text-body  text-decoration-none"><h4 >Back</h4></a>
+        </div>
+    </div>
+</section>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" >
+    <div class="modal-dialog" role="document">
+        <div class="container relative">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="product-quick-view">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <div class="quick-view-carousel">
+                            <div class="item" style="background: url(img/organic-food/q1.jpg);">
+
+                            </div>
+                            <div class="item" style="background: url(img/organic-food/q1.jpg);">
+
+                            </div>
+                            <div class="item" style="background: url(img/organic-food/q1.jpg);">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="quick-view-content">
+                            <div class="top">
+                                <h3 class="head">Mill Oil 1000W Heater, White</h3>
+                                <div class="price d-flex align-items-center"><span class="lnr lnr-tag"></span> <span class="ml-10">$149.99</span></div>
+                                <div class="category">Category: <span>Household</span></div>
+                                <div class="available">Availibility: <span>In Stock</span></div>
+                            </div>
+                            <div class="middle">
+                                <p class="content">Mill Oil is an innovative oil filled radiator with the most modern technology. If you are
+                                    looking for something that can make your interior look awesome, and at the same time give you the pleasant
+                                    warm feeling during the winter.</p>
+                                <a href="#" class="view-full">View full Details <span class="lnr lnr-arrow-right"></span></a>
+                            </div>
+                            <div class="bottom">
+                                <div class="color-picker d-flex align-items-center">Color:
+                                    <span class="single-pick"></span>
+                                    <span class="single-pick"></span>
+                                    <span class="single-pick"></span>
+                                    <span class="single-pick"></span>
+                                    <span class="single-pick"></span>
+                                </div>
+                                <div class="quantity-container d-flex align-items-center mt-15">
+                                    Quantity:
+                                    <input type="text" class="quantity-amount ml-15" value="1" />
+                                    <div class="arrow-btn d-inline-flex flex-column">
+                                        <button class="increase arrow" type="button" title="Increase Quantity"><span class="lnr lnr-chevron-up"></span></button>
+                                        <button class="decrease arrow" type="button" title="Decrease Quantity"><span class="lnr lnr-chevron-down"></span></button>
+                                    </div>
+
+                                </div>
+                                <div class="d-flex mt-20">
+                                    <a href="#" class="view-btn color-2"><span>Add to Cart</span></a>
+                                    <a href="#" class="like-btn"><span class="lnr lnr-layers"></span></a>
+                                    <a href="#" class="like-btn"><span class="lnr lnr-heart"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../layouts/footer') %>

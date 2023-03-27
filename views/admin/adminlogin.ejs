@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title> Admin Login</title>
+  <link rel="stylesheet" href="css/adminLogin.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="login-box">
+  <h2>SHOEMART ADMIN LOGIN</h2>
+  <form id="form1"  action="/admin"method="POST">
+    <div class="user-box">
+      <input type="text" name="email" required>
+      <label>Admin Email</label>
+    </div>
+    <div class="user-box">
+      <input type="password" name="password" required>
+      <label>Password</label>
+    </div>
+    <a href="javascript:;" onclick="document.getElementById('form1').submit();">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      Submit
+    </a>
+  </form>
+  <%
+  if(typeof message !== 'undefined'){
+  
+      %>
+  
+      <h3><%= message %></h3>
+  
+      <%
+  }
+  
+  %>
+</div>
+<!-- partial -->
+  
+</body>
+</html>

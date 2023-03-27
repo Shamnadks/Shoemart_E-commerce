@@ -1,0 +1,40 @@
+{
+  "name": "shoe-mart",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "author": "Shamnad KS",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cookie-parser": "^1.4.6",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "http-errors": "^2.0.0",
+    "jimp": "^0.22.7",
+    "moment": "^2.29.4",
+    "mongod": "^2.0.0",
+    "mongoose": "^6.9.1",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.1",
+    "nodemon": "^2.0.20",
+    "path": "^0.12.7",
+    "pdfkit": "^0.13.0",
+    "pdfkit-table": "^0.1.99",
+    "pdfmake": "^0.2.7",
+    "randomstring": "^1.2.3",
+    "razorpay": "^2.8.6",
+    "sharp": "^0.31.3",
+    "sweetalert": "^2.1.2",
+    "twilio": "^4.7.2",
+    "zoomove": "^1.3.0"
+  }
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>OTP Verification Card Design | Rustcode</title>
+  <link rel="stylesheet" type="text/css" href="css/otp.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+
+<body >
+
+<div class="container d-flex justify-content-center  w-100 align-items-center" >
+
+ <div class="card text-center w-100">
+
+	<div class="card-header p-5" >
+		<img src="img/otp.png">
+		<h5 class="mb-2">OTP VERIFICATION</h5>
+		<div>
+			<small>code has been send to ******0216</small>
+		</div>
+	</div>
+
+	<!-- <div class="input-container d-flex flex-row justify-content-center mt-2">
+		<input type="text" class="m-1 text-center form-control rounded" maxlength="1">
+		<input type="text" class="m-1 text-center form-control rounded" maxlength="1">
+		<input type="text" class="m-1 text-center form-control rounded" maxlength="1">
+		<input type="text" class="m-1 text-center form-control rounded" maxlength="1">
+		<input type="text" class="m-1 text-center form-control rounded" maxlength="1">
+		<input type="text" class="m-1 text-center form-control rounded" maxlength="1">
+	</div>
+
+ <div>
+ 	<small>
+ 		didn't get the otp
+		<a href="/register" method="post" class="text-decoration-none">Resend</a>
+ 	</small>
+ </div>
+
+ <div class="mt-3 mb-5">
+ 	<button href="/verify-otp" class="btn btn-success px-4 verify-btn">verify</button>
+ </div> -->
+ <form action="/verify-otp" method="post">
+	<h1 class="pb-3 font-weight-bold">Enter your Otp</h1>
+	<!-- Mobile input -->
+	<div class="form-outline mb-4">
+	  <input type="otp" id="otp" name="otp" class="form-control form-control-lg border-dark"
+		placeholder="please enter Otp" maxlength="6"  />
+	  <div class="error" id="otpErr"></div>
+	</div>
+	<% if(typeof error !== 'undefined'){%>
+		<h5 class="text-danger text-center"><%= error  %></h5>
+	<%}%>
+	
+
+	<!-- Submit button -->
+	<button type="submit" class="btn btn-danger px-4  w-100 verify-btn">Verify Otp</button>
+  </form>
+
+  <span id="verifiBtn"> <button disabled="true"
+	class="btn btn-danger px-4 w-100 border-dark mt-2">resend Otp in<span
+	  class="timer"></span> </span>
+<span id="counter"></span>
+</span></button><br> 
+
+
+ </div>
+
+</div>
+
+</body>
+</html>
+<script>
+	function countdown() {
+	  let seconds = 59;
+	  function tick() {
+		let counter = document.getElementById("counter");
+		seconds--;
+		counter.innerHTML =
+		  "0:" + (seconds < 10 ? "0" : "") + String(seconds);
+		if (seconds > 0) {
+		  setTimeout(tick, 1000);
+		} else {
+		  document.getElementById("verifiBtn").innerHTML = `
+		 
+			   <button  type ="submit" method="post" class="btn btn-success btn-lg btn-genric w-100 border-dark mt-2" onclick="location.reload()">resend Otp</button>
+			   <br>
+			  `;
+		  document.getElementById("counter").innerHTML = "";
+		}
+	  }
+	  tick();
+	}
+	countdown();
+  </script>
+  

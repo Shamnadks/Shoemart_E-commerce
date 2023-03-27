@@ -1,0 +1,155 @@
+<%- include('../layouts/head.ejs')%>
+<style>
+
+.main{
+    max-width: 100%;
+    padding: 20px;
+    background-color: #e7862b;
+  box-shadow: 0 0 10px rgba(19, 17, 17, 0.377);
+}
+
+
+.profile {
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.profile img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.profile h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.profile p {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.profile ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.profile li {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.profile li strong {
+  display: inline-block;
+  width: 100px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+</style>
+<body>
+    <% if(typeof userData !== "undefined"){ %>
+		<%-include('userloged') %>
+	<%}else{%>
+		<%- include('noUser') %>
+	<%}%>
+    <section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>YOUR PROFILE</h1>
+					<nav class="d-flex align-items-center">
+						<a href="#">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="#">Welcome to Shoemart</a>
+					</nav>
+				</div>
+			</div>
+			
+		</div>
+	</section>
+
+
+
+
+
+
+<div class="container main">
+
+
+    <div class="profile">
+        <div class="container">
+            <div class="row">
+            <div class="col-6">
+        <img src="img/proflepic.png" alt="Profile Picture">
+        <h2><%= userData.name %></h2>
+        <ul>
+          <li><strong>Email:</strong> <%= userData.email%></li>
+          <li><strong>Phone:</strong> <%=userData.mobile%></li>
+        </ul>
+    </div>
+
+
+
+
+    <div class="col-6">
+<br>
+<br>
+<br>
+        
+<a href="/profileEdit?id=<%= userData._id %>" class="genric-btn w-100 primary circle">Edit profile</a> <br><br>
+<a href="/order" class="genric-btn w-100 primary circle">My orders</a> <br><br>
+<a href="/address" class="genric-btn w-100 primary circle">Manage Address</a> <br><br>
+<a href="/forgetPassword" class="genric-btn  w-100 primary circle">Reset Password</a> <br><br>
+<h5 class="text-success"><span class="text-danger" >wallet Amount:</span>₹ <%= userData.wallet %></h5>
+</div>
+        </div>
+
+        <div class="container">
+        <div class="card mb-4">
+          <div class="card-header"> Address :</div>
+          <div class="card-body">
+            
+                <% address.forEach(function(item) { %>
+                      <div class="bg-white card addresses-item mb-4 border border-primary shadow">
+                          <div class="gold-members p-4">
+                              <div class="media">
+                                  <div class="mr-3"><i class="icofont-ui-home icofont-3x"></i>
+                                  </div>
+                                  <div class="media-body">
+                                      <h6 class="mb-1 text-secondary"><%=item.delivery_point%></h6>
+                                      <p class="text-black"><%=item.name%> &nbsp &nbsp
+                                          &nbsp<b><%=item.number%></b>
+                                      </p>
+                                      <p><%=item.house%></p>
+                                      <p><%=item.city%>,<%=item.state%></p>
+                                      <p><%=item.pincode%> </p>
+                                      <a class="btn btn-success" href="/edit-address?id=<%=item._id%>">Edit</a>
+                                      <a class="btn btn-danger" href="/delete-address?id=<%=item._id%>"
+                                          onclick="return confirm('Are You Sure ?')">DELETE</a>
+                                      <!-- <a class="btn btn-primary" href="/editaddress?id={{this._id}}">EDIT</a> -->
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <% }) %>
+              </div>
+          </div>
+          </div>
+
+
+
+
+   </div>
+    </div>
+    </div>
+
+
+
+      <%- include('../layouts/footer.ejs')%>

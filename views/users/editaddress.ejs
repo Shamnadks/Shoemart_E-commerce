@@ -1,0 +1,175 @@
+<%- include('../layouts/head.ejs')%>
+<style>
+
+.main{
+    max-width: 100%;
+    padding: 20px;
+    background-color: #e7862b;
+  box-shadow: 0 0 10px rgba(19, 17, 17, 0.377);
+}
+
+
+.profile {
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.profile img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.profile h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.profile p {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.profile ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.profile li {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.profile li strong {
+  display: inline-block;
+  width: 100px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+</style>
+<body>
+    <% if(typeof userData !== "undefined"){ %>
+		<%-include('userloged') %>
+	<%}else{%>
+		<%- include('noUser') %>
+	<%}%>
+    <section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>EDIT YOUR ADDRESS HERE</h1>
+					<nav class="d-flex align-items-center">
+						<a href="#">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="#">Welcome to Shoemart</a>
+					</nav>
+				</div>
+			</div>
+			
+		</div>
+	</section>
+
+    <div class="container main">
+
+
+        <div class="profile">
+            <div class="container">
+
+
+
+                <div class="card mb-4 p-5">
+                    <div class="card-header">Account Details</div>
+                    <form method="post" action="" >
+                            
+                            <label class="small mb-1" >HOME / OFFICE</label>
+                            <br>
+                            <select class="mb-3" name="delivery_point" id="category" >
+                                       
+                                        <option>HOME</option>
+                                        <option>OFFICE</option>
+                                       
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <br>
+                            <!-- Form Group (username)-->
+                            <div class="mb-3">
+                                <label class="small mb-1 float-left">Full Name</label>
+                                <input class="form-control" id="inputUsername" type="text"  name="name" value="<%=address.Address[0].name%>" >
+                            </div>
+                            
+                            <!-- Form Row-->
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1 float-left"  >Mobile</label>
+                                    <input class="form-control"  name="number" id="inputFirstName" type="text" value="<%=address.Address[0].number%>" >
+                                </div>
+                                <!-- Form Group (last name)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1 float-left" >State</label>
+                                    <input class="form-control" id="inputLastName"name="state" type="text" value="<%=address.Address[0].state%>">
+                                </div>
+                            </div>
+                            <!-- Form Row        -->
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (organization name)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1 float-left" >Address</label>
+                                    <input class="form-control" id="inputOrgName"  name="house" type="text" value="<%=address.Address[0].house%>" >
+                                </div>
+                                <!-- Form Group (location)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1 float-left" >City</label>
+                                    <input class="form-control" id="inputLocation"name="city" type="text" value="<%=address.Address[0].city%>" >
+                                </div>
+                            </div>
+                            <!-- Form Group (email address)-->
+                           
+                            <!-- Form Row-->
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (phone number)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1 float-left" >Country</label>
+                                    <input class="form-control" name="country" id="inputPhone" type="tel" placeholder="Enter your country" >
+                                </div>
+                                <!-- Form Group (birthday)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1 float-left">ZIP</label>
+                                    <input class="form-control" id="inputBirthday" type="text" name="pincode" value="<%=address.Address[0].pincode%>" >
+                                </div>
+                            </div>
+                              <!-- <div class="mb-3">
+                                <label class="small mb-1" for="inputEmailAddress">HOME / OFFICE</label>
+                                <input class="form-control" id="inputEmailAddress" name="delivery_point"  type="text">
+                            </div>  -->
+                             
+                            <!-- Save changes button-->
+                            <button class="btn btn-primary" value="submit" type="submit">Edit Address</button>
+                    <!-- <button style="float: left;"><a href="/user-profile">back</a></button>  -->
+                        </form></center>  
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+        </div>
+      
+      
+        <%- include('../layouts/footer.ejs')%>

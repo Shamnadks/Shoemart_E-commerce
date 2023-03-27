@@ -1,0 +1,237 @@
+<%- include('../layouts/head.ejs')%>
+<style>
+
+.main{
+    max-width: 100%;
+    padding: 20px;
+    background-color: #e7862b;
+  box-shadow: 0 0 10px rgba(19, 17, 17, 0.377);
+}
+
+
+.profile {
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.profile img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.profile h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.profile p {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.profile ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.profile li {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.profile li strong {
+  display: inline-block;
+  width: 100px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+</style>
+<body>
+    <% if(typeof userData !== "undefined"){ %>
+		<%-include('userloged') %>
+	<%}else{%>
+		<%- include('noUser') %>
+	<%}%>
+    <section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>YOUR ORDER DETAILS</h1>
+					<nav class="d-flex align-items-center">
+						<a href="#">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="#">Welcome to Shoemart</a>
+					</nav>
+				</div>
+			</div>
+			
+		</div>
+	</section>
+
+    <div class="container main">
+
+
+        <div class="profile">
+            <div class="container">
+
+
+              <section class=" gradient-custom">
+
+              <div class="container py-5 h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                  <div class="col-lg-10 col-xl-12">
+                    <% order.forEach(function(order) { %>
+                    <div class="card" style="border-radius: 10px;">
+                      <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                          <p class="lead fw-normal mb-0" style="color: #a8729a;">Order Summary</p>
+                          <p class="small text-muted mb-0">Order ID : <span class="text-danger" > <%= order.orderId %></span></p>
+                        </div>
+                        <% var totalPrice = 0 %>
+                        <% order.product.forEach(function(product) { %>
+                        <div class="card shadow-0 border mb-4">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col-md-4 text-center d-flex justify-content-center align-items-center">
+                                <p class="text-muted mb-0">Product name : <span class="text-primary text-nowrap" ><%= product.name %></span></p>
+                              </div>
+                              <div class="col-md-4 text-center d-flex justify-content-center align-items-center">
+                                <p class="text-muted mb-0 small">Price :<span class="text-success" > ₹<%= product.price * product.quantity %></span></p>
+                              </div>
+                              <div class="col-md-4 text-center d-flex justify-content-center align-items-center">
+                                <p class="text-muted mb-0 small">Quantity : <span class="text-danger" ><%= product.quantity %></span></p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <% totalPrice += product.price * product.quantity %>
+                        <% }); %>
+                        <p class=" text-success mb-0 justify-content-left"><span class="fw-bold me-4 text-danger">Subtotal : </span>₹ <%= totalPrice %></p>
+                        <br>
+                        <hr>
+                        <br>
+                        <div class="d-flex justify-content-between pt-2">
+                          <p class="fw-bold mb-0 text-success">Order Details</p>
+                          <p class=" text-success mb-0"><span class="fw-bold me-4 text-danger">Total Amount with discount : </span>₹ <td><%= order.total ? order.total : order.subtotal %></td></p>
+                        </div>
+                        <div class="d-flex justify-content-between pt-2">
+                          <% if (order.status === "processing") { %>
+                            <h5 class="text-muted">Order status : Processing</h5>
+                          <% } else if (order.status === "Shipped") { %>
+                            <h5 class="text-warning">Order status : Shipped</h5>
+                          <% } else if (order.status === "Out for Delivery") { %>
+                            <h5 class="text-info">Out for Delivery</h5>
+                          <% } else if (order.status === "Delivered") { %>
+                            <h5 class="text-success">Order status : Delivered</h5>
+                          <% } else if (order.status === "Cancelled") { %>
+                            <h5 class="text-danger">Order status : Cancelled</h5>
+                          <% } else if (order.status === "Returned") { %>
+                            <h5 class="text-primary">Order status : Returned</h5>
+                          <% } %>
+                        </div>
+                        <br>
+                        <div class="d-flex justify-content-between">
+                         
+                          <p class="text-success mb-0"><span class="text-danger">Ordered date : </span><%= order.date.toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'}) %> <%= order.date.toLocaleTimeString('en-US', {hour: 'numeric', minute:'numeric'}) %></p>
+                        </div>
+                        <br>
+                        <div class="justify-content-between">
+                          <a href="/download-Invoice?id=<%= order.orderId %>" class="text-white btn  btn-success text-decoration-none"
+                          data-bs-toggle="" data-bs-target=><strong>Download Invoice</strong></a>
+                        </div>
+                        <br>
+                        <div class="d-flex justify-content-center mb-5">
+                          <% if (order.status === "processing" || order.status === "Shipped") { %>
+                            <a href="/cancel-order?id=<%= order._id %>" class="text-white btn btn-danger text-decoration-none"
+                              data-bs-toggle="modal" data-bs-target="#exampleModal<%= order._id %>"><strong>Cancel Order</strong></a>
+                              <% } %>
+
+                              <% if (order.status === "Delivered") { %>
+                                <a href="/cancel-order?id=<%= order._id %>" class="text-danger btn btn-primary text-decoration-none"
+                                  data-bs-toggle="modal" data-bs-target="#exampleModal<%= order._id %>"><strong>Return order</strong></a>
+                                  <% } %>
+
+                                </div>
+                              </div>
+                    
+                            </div>
+
+                            <% if(order.status === "processing") { %>
+
+                              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">Cancel Order</h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <p>Are you sure to cancel order ?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                      <a href="/cancel-order?id=<%= order._id %>"><button type="button" class="btn btn-danger">Cancel Order</button></a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            <% } %>
+                            <% if(order.status === "Shipped") { %>
+                              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">Cancel Order</h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <p>Are you sure to cancel order ?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                      <a href="/cancel-order?id=<%= order._id %>"><button type="button" class="btn btn-danger">Cancel Order</button></a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            <% } %>
+                            <% if(order.status === "Delivered") { %>
+                              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">Return Order</h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <p>Are you sure to return order ?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                      <a href="/cancel-order?id=<%= order._id %>"><button type="button" class="btn btn-danger">Return Order</button></a>
+                                    </div>
+                                  </div>
+                                </div>
+                                
+                              </div>
+                            <% } %>
+                            <%})%>
+
+                          
+
+      </div>
+    </div>
+  </div>
+</section>            
+</div>
+</div>
+</div>
+
+
+<%- include('../layouts/footer.ejs')%>

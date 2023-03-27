@@ -1,0 +1,196 @@
+
+<%- include('../layouts/head.ejs')%>
+<style>
+
+.main{
+    max-width: 100%;
+    padding: 20px;
+    background-color: #e7862b;
+  box-shadow: 0 0 10px rgba(19, 17, 17, 0.377);
+}
+
+
+.profile {
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.profile img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.profile h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.profile p {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.profile ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.profile li {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.profile li strong {
+  display: inline-block;
+  width: 100px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+</style>
+<body>
+    <% if(typeof userData !== "undefined"){ %>
+		<%-include('userloged') %>
+	<%}else{%>
+		<%- include('noUser') %>
+	<%}%>
+    <section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>Your Wishlist 🤍 </h1>
+					<nav class="d-flex align-items-center">
+						<a href="#">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="#">Welcome to Shoemart</a>
+					</nav>
+				</div>
+			</div>
+			
+		</div>
+	</section>
+
+    <div class="container main">
+
+
+        <div class="profile">
+            <div class="container">
+
+                <div class="page-content">
+                    <div class="container">            
+                      <table class="table table-wishlist table-mobile">
+                        <thead>
+                          <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Stock Status</th>
+                            <th></th>
+                            <th></th>
+                          </tr>
+                        </thead>
+          
+                        <tbody>
+                          <% if (wishlistProducts.length === 0) { %>
+                            <tr>
+                              <td colspan="5">Your wishlist is empty</td>
+                            </tr>
+                          <% } else { %>
+                            <% wishlistProducts.forEach((item,index)=>{%>
+                              
+                          <tr class="wishlist-products product">
+                            <td class="product-col">
+                              <div class="product">
+                                <figure class="product-media">
+                                  <a href="#">
+                                    <img
+                                      src="/images/<%=item.images[0]%>"
+                                      alt="Product image"
+                                      style="width: 60px; height: 60px;"
+                                    />
+                                  </a>
+                                </figure>
+          
+                                <h3 class="product-title">
+                                  <a href="#"><%=item.name%></a>
+                                </h3>
+                                <!-- End .product-title -->
+                              </div>
+                              <!-- End .product -->
+                            </td>
+                            <td class="price-col"><%=item.price%></td>
+                            <%if(item.stock==0){%>
+                              <td class="stock-col">
+                                <span class="in-stock" style="color: rgb(146, 4, 4);">Out Of stock</span>
+                              </td>
+                            <%}else{%>
+                            <td class="stock-col">
+                              <span class="in-stock">In stock</span>
+                            </td>
+                          <%}%>
+                            <td class="action-col">
+                              <button class="btn btn-block btn-outline-primary-2" > <i class="icon-cart-plus"></i><a onclick="addToCart('<%=item._id%>')"> Add to Cart</a>
+                              </button>
+                            </td>                  
+                            <td >
+                            
+                              <button style="border:none" id="removeButton" onclick="removeWishlist('<%=item._id%>','<%=index%>')">
+                                <i class="fa fa-trash-o" style="font-size:24px"></i>
+                              </button>
+                            </td>
+                          </tr>
+                          <%})%>
+                          <% } %>                
+                        </tbody>
+                      </table>
+                      <!-- End .table table-wishlist -->
+                      <!-- End .wishlist-share -->
+                    </div>
+                    <!-- End .container -->
+                  </div>
+                  <!-- End .page-content -->
+</div>
+</div>
+</div>
+
+
+<%- include('../layouts/footer.ejs')%>
+<script>
+  
+	const addToCart = async(productId)=>{
+		  const response = await fetch('/addtocart',{
+			method: "POST",
+			headers: {
+			  "Content-Type": "application/json"
+			},
+			body: JSON.stringify({productId: productId})
+		  });
+		  let res = await response.json();
+            if (res == "success") {
+            window.location.reload();
+        
+            }
+          }
+  </script>
+
+   <script>
+    const removeWishlist = async(productId,index)=>{
+      const response = await fetch('/removewishlist',{
+        method:"POST",
+        headers:{
+           "Content-Type" :"application/json"
+        },
+        body: JSON.stringify({
+          productId:productId,
+          index:index
+        })        
+      })
+      .then((res)=>res.json())
+      .then((res)=>window.location.reload())
+      .catch(error => console.error(error))
+    }
+   </script>

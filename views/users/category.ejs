@@ -1,0 +1,174 @@
+<%- include('../layouts/head.ejs')%>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+<body id="category">
+
+	<!-- Start Header Area -->
+	<% if(typeof userData !== "undefined"){ %>
+		<%-include('userloged') %>
+	<%}else{%>
+		<%- include('noUser') %>
+	<%}%>
+	<!-- End Header Area -->
+
+	<!-- Start Banner Area -->
+	<section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>Shop Category page</h1>
+					<nav class="d-flex align-items-center">
+						<a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="#">Shop<span class="lnr lnr-arrow-right"></span></a>
+						<a href="category.html">Fashon Category</a>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Banner Area -->
+	<br>
+<section class="related-product-area section_gap_bottom">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-6 text-center">
+					<div class="section-title">
+						<h1>One shoe can change your life</h1>
+						<p>The little voice in your head that says “But the shoes” that’s the one to listen to!.</p>
+					</div>
+				</div>
+			</div>
+
+			<section>
+    <div class="untree_co-section product-section before-footer-section">
+		    <div class="container">
+                <br><br>
+                 <h1>Shop according to category</h1> 
+                <br><br>
+		      	<div class="row">
+                    <%if(category.length>0)  {%>
+						<%for(let i=0;i <category.length; i++){%>
+		      		<!-- Start Column 1 -->
+					<div class="col-12 col-md-4   col-lg-3 mb-5" style="border-radius: 1em; text-align: center; margin:10px; background-color: rgb(39, 39, 36); ">
+						<a class="product-item  text-decoration-none " href="/viewproducts?categoryid=<%=category[i]._id %>">
+							<h3 class="product-title" style="margin: auto;color:#fcc52d;"><%=category[i].category %></h3>
+						</a>
+					</div> 
+					<!-- End Column 1 -->
+					<%}%>
+					<%}else{%>
+						<h3 class="product-title">NO CATEGORY EXISTS</h3>
+						<% } %>
+
+		      	</div>
+		    </div>
+		</div>
+</section>
+<div class="row">
+					<!-- single product -->
+					<%if(product.length>0)  {%>
+						<%for(let i=0;i <product.length; i++){%>
+					<div class="col-lg-3 col-md-6" >
+						<div class="single-product" >
+							<a href="/product?id=<%=product[i]._id%>"><img class="img-fluid" style="border-radius: 1em;"
+									src="/images/<%=product[i].images[0]%>" alt=""></a>
+							<div class="product-details">
+								<h6><%= product[i].productName%></h6>
+								<div class="price">
+									<h6>₹ <%=product[i].price%></h6>
+								</div>
+								<%if(product[i].stock==0){%>
+									<br>
+									<h4 style="color: rgb(112, 4, 4);">Out of Stock</h4>
+								<%}else{%>
+								<div class="prd-bottom">
+
+
+									<a onclick="addToCart('<%=product[i]._id%>')" class="social-info">
+										<span class="ti-bag"></span>
+										<p class="hover-text">add to bag</p>
+									</a>
+									<a onclick="addToWishlist('<%=product[i]._id%>') " class="social-info">
+										<span class="lnr lnr-heart"></span>
+										<p class="hover-text">Wishlist</p>
+									</a>
+
+									<a href="/product?id=<%=product[i]._id%>" class="social-info">
+										<span class="lnr lnr-move"></span>
+										<p class="hover-text">view more</p>
+									</a>
+								</div>
+							<%}%>
+							</div>
+						</div>
+					</div>
+					<%}%>
+					<%}else{%>
+						<span>no products</span>
+					   <% } %>
+		</div>
+		</div>
+	</section>
+
+	<!-- End related-product Area -->
+
+	<!-- start footer Area -->
+	
+	<!-- End footer Area -->
+
+	<!-- Modal Quick Product View -->
+	
+	<%- include('../layouts/footer') %>
+
+
+	<script>
+		const addToWishlist = async(productId)=>{
+		  const response = await fetch('/addwishlist',{
+			method: "POST",
+			headers: {
+			  "Content-Type": "application/json"
+			},
+			body: JSON.stringify({productId: productId})
+		  }).catch(error=>console.error(error))
+		  if(response.ok){
+			const data = await response.json();
+			Swal.fire({
+				    title: 'Success',
+                    text: "Item added to wishlist !",
+                    icon: 'success',
+					showConfirmButton: false, 
+					iconHtml: '<i class="fas fa-heart"></i>',
+				    timer: 1000 });    
+			const wishlistContainer = document.getElementById('wishlist-container');
+			const itemElement = document.createElement("div");
+			wishlistContainer.appendChild(itemElement);
+		  }
+		  else{
+			alert("Error adding product to wishlist");
+		  }
+		}    
+		
+		
+
+
+		const addToCart = async(productId)=>{
+		  const response = await fetch('/addtocart',{
+			method: "POST",
+			headers: {
+			  "Content-Type": "application/json"
+			},
+			body: JSON.stringify({productId: productId})
+		  });
+		  let res = await response.json();
+            if (res == "success") {
+				Swal.fire({
+				    title: 'Success',
+                    text: "Item added to Cart !",
+                    icon: 'success',
+					showConfirmButton: false, 
+					iconHtml: '<i class="fas fa-shopping-cart"></i>',
+				    timer: 1000 });
+        
+            }
+          }
+	  </script>

@@ -1,0 +1,611 @@
+<%- include('../layouts/head.ejs')%>
+<style>
+
+/* Hide the default radio button */
+.radios{
+  display: none;
+}
+
+/* Style the container for the custom radio button */
+.radio-container {
+  display: block;
+  position: relative;
+  padding-left: 28px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 20px;
+  color: #333;
+}
+
+/* Style the custom radio button */
+.radio-container .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+}
+
+/* Style the custom radio button when it's checked */
+.radio-container input[type="radio"]:checked + .checkmark {
+  background-color: #f9a825;
+  border-color: #f9a825;
+}
+
+/* Style the checkmark inside the custom radio button */
+.radio-container .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark inside the custom radio button when it's checked */
+.radio-container input[type="radio"]:checked + .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark inside the custom radio button when it's checked */
+.radio-container .checkmark:after {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+
+.main{
+    max-width: 100%;
+    padding: 20px;
+    background-color: #e7862b;
+  box-shadow: 0 0 10px rgba(19, 17, 17, 0.377);
+}
+
+
+.profile {
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.profile img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.profile h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.profile p {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.profile ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.profile li {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.profile li strong {
+  display: inline-block;
+  width: 100px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+</style>
+<body>
+    <% if(typeof userData !== "undefined"){ %>
+		<%-include('userloged') %>
+	<%}else{%>
+		<%- include('noUser') %>
+	<%}%>
+    <section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>CHECK OUT</h1>
+					<nav class="d-flex align-items-center">
+						<a href="#">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="#">Welcome to Shoemart</a>
+					</nav>
+				</div>
+			</div>
+			
+		</div>
+	</section>
+
+    <div class="container main">
+
+
+        <div class="profile">
+            <div class="container">
+
+
+
+
+
+<section class="h-100 h-custom" style="background-color: #ffffff;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12">
+                <br><br><br>
+                <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+                    <div class="card-body p-0">
+                        <div class="row g-0">
+                            <div class="col-lg-12">
+                                <div class="p-5">
+                                    <div class="container">
+                                        <div class="row billing-fields">
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 sm-margin-30px-bottom">
+                                                <div class="create-ac-content bg-light-gray padding-20px-all">
+                                                    <br><br>
+
+                                                    <% if (address) { %>
+                                                        <% for (i = 0; i < address.length; i++) { %>
+                                                          <div class="col">
+                                                            <div class="card shadow-sm">
+                                                              <div class="card-body" >
+                                                                <label class="radio-container">
+                                                                  <input type="radio" class="radios" id="address_<%= i %>" name="address" value="<%= address[i].name %>,  <%=address[i].house %>, <%= address[i].city %>, <%= address[i].state %>, <%= address[i].pincode %>, <%= address[i].mobile %> " required>&nbsp;
+                                                                  <span class="checkmark"></span>
+                                                                </label>
+                                                                 <h3> <%= address[i].name %></h3><br>
+                                                                  <%= address[i].number %><br>
+                                                                  <%= address[i].house %><br>
+                                                                  <%= address[i].city %><br>
+                                                                  <%= address[i].state %><br>
+                                                                  <%= address[i].pincode %><br>
+                                                                  <%= address[i].delivery_point %><br><br>
+                                                                  <a class="btn btn-success" href="/edit-checkOutAddress?id=<%=address[i]._id%>">Edit</a>
+                                                                  <a  onclick=" removeaddress('<%= address[i]._id %>')"   class="btn btn-danger">Delete</a>
+                                                                
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        <% } %>
+                                                      <% } else { %>
+                                                        <div>
+                                                          <p>No Address Found. Please add Address.</p>
+                                                        </div>
+                                                      <% } %>
+                                                        <br>
+                                                        <div class="d-flex justify-content-left mb-2">
+                                                            <a href="/checkout-address"
+                                                                class="btn btn-outline-dark"><strong>Add new
+                                                                    Address</strong></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="cupon_area ">
+                <div class="check_title">
+                   
+                </div>
+                <input type="text" name="coupon" id="couponcode" class="w-75" placeholder="Enter coupon code">
+                <button class="btn bg-warning" onclick="checkCoupon()" href="">Apply Coupon</button>
+                <span id="errorMessage"></span>
+            </div>
+                                                </div>
+                                            
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                                <div class="your-order-payment">
+                                                    <div class="your-order">
+                                                        <h2 class="order-title mb-4">Your Order</h2>
+
+                                                        <div class="table-responsive-sm order-table table-bordered">
+                                                            <table class="table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="col">Product Name</th>
+                                                                        <th scope="col">Quantiy</th>
+                                                                        <th scope="col">Price</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <% productDetails.forEach(function(product) { %>
+                                                                        <tr>
+                                                                        <td scope="row"><%= product.productName %></td>
+                                                                        <td><%= product.quantity %></td>
+                                                                        <td><%= product.price %></td>
+                                                                        <input type="hidden" name="productid" value="<%= product._id %>">
+                                                                        <input type="hidden" name="productname" value="<%= product.productName %>">
+                                                                        <input type="hidden" name="price" value="<%= product.price %>">
+                                                                        <input type="hidden" name="quantity" value="<%= product.quantity %>">
+                                                                        </tr>
+                                                                        <% }); %>
+                                                                    </tbody>
+                                                                    <tfoot>
+                                                                        <tr>
+                                                                            <td>Total</td>
+                                                                            <td></td>
+                                                                            <td><%= subtotal %></td>
+                                                                            <input type="hidden" id="subtotal" value="<%= subtotal %>">
+                                                                        </tr>
+                                                                    </tfoot>
+                                                                    </table>
+                                                                    </div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                                                            Offer
+                                                                            <h4 id="offer" class="fw-normal"><%= offer %>%</h4>
+                                                                        </li>
+                                                                        <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                                                                            <div>
+                                                                                <strong>Total amount</strong>
+                                                                            </div>
+                                                                            <h3 id="gtotal" class="fw-normal" ><%= total %></h3>
+                                                                            <input type="hidden" id="ftotal" value="<%= total %>">
+                                                                        </li></div>
+                                                                        <hr>
+                                                                        <div class="your-payment">
+                                                                            <h2 class="payment-title mb-3">Payment Method</h2>
+                                                                            <br>
+                                                                            <div class="payment-method">
+                                                                                <div class="form-check">
+                                                                                    <input onclick="enableButton()" class="form-check-input"
+                                                                                        type="radio" name="payment" id="COD" value="1">
+                                                                                    <label class="form-check-label" for="payment1">
+                                                                                        Cash On Delivery
+                                                                                    </label>
+                                                                                    <div>
+                                                                                        <input onclick="enableButton()"
+                                                                                            class="form-check-input" type="radio"
+                                                                                            name="payment" id="rzp-button1" value="2">
+                                                                                        <label class="form-check-label" for="payment2">
+                                                                                            RazorPay
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <hr>
+                                                                                <div class="order-button-payment">
+                                                                                    <button class="btn" onclick="CheckplaceOrder()"
+                                                                                        value="Place order" id="placeOrderButton"
+                                                                                        disabled>Place
+                                                                                        order</button>
+                                                                                </div>
+                                                                                <input type="hidden" name="radioValue">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </section>
+
+
+
+
+</div>
+</div>
+</div>
+
+
+<%- include('../layouts/footer.ejs')%>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
+ <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+    let Rtotal;
+    let addressId ;
+    let payment;
+    let subtotal;
+   
+    subtotal = Number(document.getElementById('subtotal').value);
+    Rtotal = Number(document.getElementById('ftotal').value);
+    
+    
+
+     async function enableButton() {
+        var radioButtons = document.getElementsByName("address");
+      for (var i = 0; i < radioButtons.length; i++) {
+        radioButtons[i].addEventListener('click', function() {
+          var id = this.id;
+           addressId= document.getElementById(id).value;
+         
+        });
+      }
+        if(addressId)
+         document.getElementById('placeOrderButton').disabled = false
+         else {Swal.fire({
+
+                    text: "Add address first !",
+                    icon: 'error',
+                    showConfirmButton: false, 
+                    iconHtml: '<i class="fas fa-map-marker-alt"></i>',
+                    timer: 1000
+                })  
+            }
+        }
+
+    
+
+    // ------------------------------------------RAZORPAY------------------------------------------------------------------
+ 
+    async function CheckplaceOrder() {
+        payment = Object.values(document.getElementsByName('payment')).filter((item) => item.checked ? item : '').map((item) => item.value)
+        if (payment[0] === '1' && addressId) {
+            placeOrder();
+        }
+        else if (payment[0] == '2' && addressId) {
+            var orderId;
+            $(document).ready(function () {
+                console.log(Rtotal)
+                var settings = {
+                    url: "/create/orderId",
+                    method: "POST",
+                    timeout: 0,
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    data: JSON.stringify({
+                        amount: Rtotal *100, //CHANGE THE AMOUNT AS NEEDED
+                    }),
+                };
+
+                //creates new orderId everytime
+                $.ajax(settings).done(function (response) {
+                    orderId = response.orderId;
+                    console.log(orderId);
+                });
+            });
+
+            
+
+            document.getElementById("placeOrderButton").onclick = function (e) {
+                var options = {
+                    key: "rzp_test_F9QqRZJgvgSUUM", // Enter the Key ID generated from the Dashboard
+                    amount: Rtotal *100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                    currency: "INR",
+                    name: "Shoemart",
+                    description: "Branded shoes",
+                    image: "https://as2.ftcdn.net/v2/jpg/03/32/46/81/1000_F_332468117_1LWZWe1XjTbedkSOAjD7H6VfDq72i04a.jpg",
+                    order_id: orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                    handler: function (response) {
+                        // alert(response.razorpay_payment_id);
+                        // alert(response.razorpay_order_id);
+                        // alert(response.razorpay_signature);
+                        var settings = {
+                            url: "/api/payment/verify",
+                            method: "POST",
+                            timeout: 0,
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            data: JSON.stringify({ response }),
+                        };
+                        console.log(response)
+                        $.ajax(settings).done(function (response) {
+                            placeOrder();
+                            // alert(JSON.stringify(response));
+                        });
+                    },
+
+                    theme: {
+                        color:"#b73100",
+                    },
+                };
+                var rzp1 = new Razorpay(options);
+                rzp1.on("payment.failed", function (response) {
+                    // alert(response.error.code);
+                    // alert(response.error.description);
+                    // alert(response.error.source);
+                    // alert(response.error.step);
+                    // alert(response.error.reason);
+                    // alert(response.error.metadata.order_id);
+                    // alert(response.error.metadata.payment_id);
+                });
+                rzp1.open();
+                e.preventDefault();
+            };
+        }    
+    }
+//   ------------------------------------------RAZORPAY-------------------------------------------------------------------
+
+
+
+    async function placeOrder() {
+        const productid = Object.values(document.getElementsByName('productid')).map((item) => item.value)
+        const productname = Object.values(document.getElementsByName('productname')).map((item) => item.value)
+        const price = Object.values(document.getElementsByName('price')).map((item) => item.value)
+        const quantity = Object.values(document.getElementsByName('quantity')).map((item) => item.value)
+        var radioButtons = document.getElementsByName("address");
+      for (var i = 0; i < radioButtons.length; i++) {
+        radioButtons[i].addEventListener('click', function() {
+          var id = this.id;
+           addressId= document.getElementById(id).value;
+         
+        });
+      }
+        const couponcode = document.getElementById('couponcode').value
+
+
+        let data = {
+            productid: productid,
+            productname: productname,
+            price: price,
+            quantity: quantity,
+            addressId: addressId,
+            payment: payment,
+            subtotal: subtotal,
+            coupon :couponcode
+
+        }
+
+
+        try {
+            let orderplacement = await fetch('/place-order', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            console.log("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")
+            let res = await orderplacement.json()
+
+            if (res.res == "success") {
+                Swal.fire({
+                    title: 'Success',
+                    text: "Item ordered successfully !",
+                    icon: 'success',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'OK',
+                    timer: 3000
+                })
+                 .then((res) => {
+                    window.location.href = '/success'
+                })
+            } else {
+                Swal.fire({
+
+                    title: 'Something went wrong',
+                    text: "something went wrong !",
+
+                    icon: 'failure',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'OK',
+                    timer: 3000
+                }).then((res) => {
+                    window.location.href = '/user'
+                })
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+
+
+    }
+
+// --------------------------------------------------coupen check---------------------------------------------------------------
+
+async function checkCoupon() {
+        
+        const coupon = document.getElementById('couponcode').value;
+        const total =document.getElementById('subtotal').value
+        console.log(coupon)
+        let valCoupon = await fetch('/validateCoupon', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code: coupon ,total:total}),
+        });
+        let response = await valCoupon.json()
+console.log(response.gtotal)
+        if (response == "fail") {
+            document.getElementById("errorMessage").innerHTML = "Coupon Invalid";
+
+        }
+        else {
+
+            Rtotal = response.gtotal
+            let offer = document.getElementById("offer").innerHTML = Number(response.offerPrice)
+         
+            console.log(Number(response.offerPrice))
+
+            let subtotal = document.getElementById('subtotal').value
+
+            let gtotal = document.getElementById('gtotal').innerHTML
+
+            const amt = Number(subtotal) * Number(offer)/100
+
+            gtotal = gtotal - amt
+
+            document.getElementById('gtotal').innerHTML = gtotal
+
+}
+}
+
+    
+
+
+</script>
+<script>
+    const removeaddress = async (addressId) => {
+      // Show a confirmation dialog using SweetAlert2
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'This address will be removed from your checkout page!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        // If the user confirms the deletion
+        if (result.value) {
+          // Send a POST request to remove the product from the backend
+          fetch('/removeaddress-checkoutpage', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              addressId:addressId,
+            })
+          })
+          .then(response => response.json())
+          .then(result => {
+            console.log(result); // Log the response to the console
+            if (result.res == "success") {
+              // Show a success message using SweetAlert2
+              Swal.fire(
+                'Deleted!',
+                'This address has been removed from your checkout page.',
+                'success'
+              ).then(() => {
+                // Reload the page after the success message is shown
+                window.location.href = window.location.href;
+              });
+            } else {
+              // If there is an error, show an error message using SweetAlert2
+              Swal.fire(
+                'Error',
+                'There was an error removing the address from your checkout page.',
+                'error'
+              );
+            }
+          })
+          .catch(error => {
+            console.log(error); // Log any errors to the console
+            // Show an error message using SweetAlert2
+            Swal.fire(
+              'Error',
+              'There was an error removing the address from your checkout page.',
+              'error'
+            );
+          });
+        }
+      })
+    }
+  </script>
