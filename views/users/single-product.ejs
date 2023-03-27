@@ -685,7 +685,13 @@ const addToWishlist = async(productId)=>{
 	  }).catch(error=>console.error(error))
 	  if(response.ok){
 		const data = await response.json();
-		alert("Product added to wishlist");    
+		Swal.fire({
+				    title: 'Success',
+                    text: "Item added to wishlist !",
+                    icon: 'success',
+					showConfirmButton: false, 
+					iconHtml: '<i class="fas fa-heart"></i>',
+				    timer: 1000 }); 
 		const wishlistContainer = document.getElementById('wishlist-container');
 		const itemElement = document.createElement("div");
 		wishlistContainer.appendChild(itemElement);
