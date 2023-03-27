@@ -1,6 +1,6 @@
-const Jimp = require('jimp');
+const Jimp = require("jimp");
 
-const crop= function(req, res, next) {
+const crop = function (req, res, next) {
   const files = req.files;
 
   // perform crop operation on each file
@@ -23,7 +23,7 @@ const crop= function(req, res, next) {
     });
   }
 
-  res.send('Crop operation complete');
+  res.send("Crop operation complete");
 };
 
-module.exports = {crop}
+module.exports = { crop };
