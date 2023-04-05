@@ -1,12 +1,11 @@
 <%- include('../layouts/head.ejs')%>
 <style>
 
-/* Hide the default radio button */
+
 .radios{
   display: none;
 }
 
-/* Style the container for the custom radio button */
 .radio-container {
   display: block;
   position: relative;
@@ -18,7 +17,7 @@
   color: #333;
 }
 
-/* Style the custom radio button */
+
 .radio-container .checkmark {
   position: absolute;
   top: 0;
@@ -30,25 +29,24 @@
   border: 1px solid #ccc;
 }
 
-/* Style the custom radio button when it's checked */
+
 .radio-container input[type="radio"]:checked + .checkmark {
   background-color: #f9a825;
   border-color: #f9a825;
 }
 
-/* Style the checkmark inside the custom radio button */
+
 .radio-container .checkmark:after {
   content: "";
   position: absolute;
   display: none;
 }
 
-/* Show the checkmark inside the custom radio button when it's checked */
 .radio-container input[type="radio"]:checked + .checkmark:after {
   display: block;
 }
 
-/* Style the checkmark inside the custom radio button when it's checked */
+
 .radio-container .checkmark:after {
   top: 50%;
   left: 50%;
