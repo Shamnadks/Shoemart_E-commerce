@@ -250,11 +250,11 @@ const RegisterLoad = async (req, res) => {
   }
 };
 
-var saavedOtp;
-var naame;
-var email;
-var moobile;
-var paassword;
+let saavedOtp;
+let naame;
+let email;
+let moobile;
+let paassword;
 
 const sendOtp = async (req, res) => {
   try {
