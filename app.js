@@ -24,7 +24,7 @@ app.use(function (req, res, next) {
   res.header("Cache-Control", "no-cache, no-store");
   next();
 });
-
+// session created
 app.use(
   session({
     secret: connectDb.sessionSecret,
